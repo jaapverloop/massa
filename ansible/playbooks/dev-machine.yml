@@ -1,0 +1,15 @@
+---
+- hosts: 33.33.33.10
+  sudo: yes
+  tasks:
+    - name: update apt cache
+      apt: update-cache=yes cache_valid_time=3600
+
+    - name: install python-setuptools
+      action: apt pkg=python-setuptools state=installed
+
+    - name: install pip
+      action: easy_install name=pip
+
+    - name: install virtualenv
+      action: pip name=virtualenv
