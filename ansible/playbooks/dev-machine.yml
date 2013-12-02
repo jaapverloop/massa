@@ -1,6 +1,7 @@
 ---
 - hosts: 33.33.33.10
   sudo: yes
+  remote_user: vagrant
   tasks:
     - name: update apt cache
       apt: update-cache=yes cache_valid_time=3600
