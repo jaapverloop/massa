@@ -21,6 +21,8 @@ Vagrant.configure("2") do |config|
   # Default value: false
   config.ssh.forward_agent = true
 
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
   config.vm.provider "virtualbox" do |v|
     v.name = "yoyo"
   end
