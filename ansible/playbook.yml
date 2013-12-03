@@ -1,5 +1,5 @@
 ---
-- hosts: 33.33.33.10
+- hosts: vagrant
   sudo: yes
   remote_user: vagrant
   tasks:

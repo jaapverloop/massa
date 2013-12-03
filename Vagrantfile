@@ -32,4 +32,13 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |v|
     v.name = "yoyo"
   end
+
+  # Enable provisioning with ansible, specifying an inventory file, and a
+  # playbook (all relative to this Vagrantfile).
+  config.vm.provision :ansible do |ansible|
+    ansible.inventory_path = "ansible/inventory"
+    ansible.playbook = "ansible/playbook.yml"
+    ansible.host_key_checking = false
+    ansible.verbose = false
+  end
 end
