@@ -23,7 +23,7 @@
       sudo: yes
 
     - name: create virtualenv directory
-      action: file dest=/srv/yoyo/.virtualenv state=directory
+      action: file dest=/srv/yoyo/.virtualenv state=directory recurse=yes owner=vagrant group=vagrant
       sudo: yes
 
     - name: install app dependencies
