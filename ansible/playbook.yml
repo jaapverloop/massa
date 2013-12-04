@@ -6,6 +6,9 @@
     - name: update apt cache
       apt: update-cache=yes cache_valid_time=3600
 
+    - name: upgrade distro
+      apt: upgrade=yes
+
     - name: install python-setuptools
       action: apt pkg=python-setuptools state=installed
 
