@@ -9,8 +9,12 @@
       apt: upgrade=yes
       sudo: yes
 
-    - name: install python-setuptools
-      action: apt pkg=python-setuptools state=installed
+    - name: install packages
+      action: apt pkg={{ item }} state=installed
+      with_items:
+        - python-setuptools
+        - nginx
+      notify: restart nginx
       sudo: yes
 
     - name: install pip
@@ -30,3 +34,18 @@
 
     - name: start gunicorn
       action: command /srv/yoyo/.virtualenv/bin/gunicorn yoyo:create_app() --config gunicorn.conf chdir=/srv/yoyo
+
+    - name: remove /etc/nginx/sites-enabled/default
+      action: file path=/etc/nginx/sites-enabled/default state=absent
+      notify: restart nginx
+      sudo: yes
+
+    - name: symlink /etc/nginx/sites-enabled/yoyo
+      action: file src=/srv/yoyo/nginx.conf dest=/etc/nginx/sites-enabled/yoyo state=link
+      notify: restart nginx
+      sudo: yes
+
+  handlers:
+    - name: restart nginx
+      action: service name=nginx state=restarted enabled=yes
+      sudo: yes
