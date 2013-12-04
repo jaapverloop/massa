@@ -1,25 +1,30 @@
 ---
 - hosts: vagrant
-  sudo: yes
   remote_user: vagrant
   tasks:
     - name: update apt cache
       apt: update-cache=yes cache_valid_time=3600
+      sudo: yes
 
     - name: upgrade distro
       apt: upgrade=yes
+      sudo: yes
 
     - name: install python-setuptools
       action: apt pkg=python-setuptools state=installed
+      sudo: yes
 
     - name: install pip
       action: easy_install name=pip
+      sudo: yes
 
     - name: install virtualenv
       action: pip name=virtualenv
+      sudo: yes
 
     - name: create virtualenv directory
       action: file dest=/srv/yoyo/.virtualenv state=directory
+      sudo: yes
 
     - name: install app dependencies
       action: pip requirements=/srv/yoyo/requirements.txt virtualenv=/srv/yoyo/.virtualenv state=present virtualenv_site_packages=no
