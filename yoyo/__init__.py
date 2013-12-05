@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask
+from flask import Flask, render_template
 from flask.ext.appconfig import AppConfig
 
 
@@ -10,6 +10,6 @@ def create_app(configfile=None):
 
     @app.route('/')
     def index():
-        return 'YoYo'
+        return render_template('index.html')
 
     return app
