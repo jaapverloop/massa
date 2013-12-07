@@ -36,8 +36,8 @@
     - name: install app dependencies
       action: pip requirements={{ root }}/requirements.txt virtualenv={{ root }}/.virtualenv state=present virtualenv_site_packages=no
 
-    - name: symlink /etc/supervisor/conf.d/yoyo.conf
-      action: file src={{ root }}/supervisor.conf dest=/etc/supervisor/conf.d/yoyo.conf state=link
+    - name: create /etc/supervisor/conf.d/yoyo.conf
+      action: template src=templates/supervisor.conf dest=/etc/supervisor/conf.d/yoyo.conf
       notify:
         - reread supervisorctl
         - update supervisorctl
@@ -53,8 +53,8 @@
       notify: restart nginx
       sudo: yes
 
-    - name: symlink /etc/nginx/sites-enabled/yoyo.conf
-      action: file src={{ root }}/nginx.conf dest=/etc/nginx/sites-enabled/yoyo.conf state=link
+    - name: create /etc/nginx/sites-enabled/yoyo.conf
+      action: template src=templates/nginx.conf dest=/etc/nginx/sites-enabled/yoyo.conf
       notify: restart nginx
       sudo: yes
 
