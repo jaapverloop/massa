@@ -35,6 +35,7 @@
 
     - name: install app dependencies
       action: pip requirements={{ root }}/requirements.txt virtualenv={{ root }}/.virtualenv state=present virtualenv_site_packages=no
+      notify: restart yoyo
 
     - name: create /etc/supervisor/conf.d/yoyo.conf
       action: template src=templates/supervisor.conf dest=/etc/supervisor/conf.d/yoyo.conf
