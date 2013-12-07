@@ -52,9 +52,13 @@
       notify: restart nginx
       sudo: yes
 
-    - name: symlink /etc/nginx/sites-enabled/yoyo
-      action: file src={{ root }}/nginx.conf dest=/etc/nginx/sites-enabled/yoyo state=link
+    - name: symlink /etc/nginx/sites-enabled/yoyo.conf
+      action: file src={{ root }}/nginx.conf dest=/etc/nginx/sites-enabled/yoyo.conf state=link
       notify: restart nginx
+      sudo: yes
+
+    - name: start nginx
+      action: service name=nginx state=started enabled=yes
       sudo: yes
 
   handlers:
@@ -71,5 +75,5 @@
       sudo: yes
 
     - name: restart nginx
-      action: service name=nginx state=restarted enabled=yes
+      action: service name=nginx state=restarted
       sudo: yes
