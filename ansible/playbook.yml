@@ -15,6 +15,7 @@
       action: apt pkg={{ item }} state=installed
       with_items:
         - python-setuptools
+        - supervisor
         - nginx
       notify: restart nginx
       sudo: yes
@@ -34,8 +35,17 @@
     - name: install app dependencies
       action: pip requirements={{ root }}/requirements.txt virtualenv={{ root }}/.virtualenv state=present virtualenv_site_packages=no
 
-    - name: start gunicorn
-      action: command {{ root }}/.virtualenv/bin/gunicorn yoyo:create_app() --config gunicorn.conf chdir={{ root }}
+    - name: symlink /etc/supervisor/conf.d/yoyo.conf
+      action: file src={{ root }}/supervisor.conf dest=/etc/supervisor/conf.d/yoyo.conf state=link
+      notify:
+        - reread supervisorctl
+        - update supervisorctl
+        - restart yoyo
+      sudo: yes
+
+    - name: start supervisor
+      action: service name=supervisor state=started enabled=yes
+      sudo: yes
 
     - name: remove /etc/nginx/sites-enabled/default
       action: file path=/etc/nginx/sites-enabled/default state=absent
@@ -48,6 +58,18 @@
       sudo: yes
 
   handlers:
+    - name: reread supervisorctl
+      action: command supervisorctl reread
+      sudo: yes
+
+    - name: update supervisorctl
+      action: command supervisorctl update
+      sudo: yes
+
+    - name: restart yoyo
+      action: command supervisorctl restart yoyo
+      sudo: yes
+
     - name: restart nginx
       action: service name=nginx state=restarted enabled=yes
       sudo: yes
