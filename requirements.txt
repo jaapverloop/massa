@@ -3,7 +3,9 @@ Flask-Script==0.6.3
 Jinja2==2.7.1
 MarkupSafe==0.18
 Werkzeug==0.9.4
+argparse==1.2.1
 flask-appconfig==0.5
 gunicorn==18.0
 itsdangerous==0.23
+setproctitle==1.1.8
 wsgiref==0.1.2
