@@ -16,13 +16,10 @@
       with_items:
         - python-dev
         - python-pip
+        - python-virtualenv
         - supervisor
         - nginx
       notify: restart nginx
-      sudo: yes
-
-    - name: install virtualenv
-      action: pip name=virtualenv
       sudo: yes
 
     - name: create virtualenv directory
