@@ -22,8 +22,12 @@
       notify: restart nginx
       sudo: yes
 
-    - name: create virtualenv directory
-      action: file dest={{ root }}/.virtualenv state=directory recurse=yes owner=vagrant group=vagrant
+    - name: create user
+      action: user name=yoyo system=yes createhome=no state=present
+      sudo: yes
+
+    - name: mount vagrant
+      action: mount fstype=vboxsf opts=uid=yoyo,gid=yoyo name={{ root }} src=/vagrant state=mounted
       sudo: yes
 
     - name: install app dependencies
