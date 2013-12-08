@@ -15,14 +15,10 @@
       action: apt pkg={{ item }} state=installed
       with_items:
         - python-dev
-        - python-setuptools
+        - python-pip
         - supervisor
         - nginx
       notify: restart nginx
-      sudo: yes
-
-    - name: install pip
-      action: easy_install name=pip
       sudo: yes
 
     - name: install virtualenv
