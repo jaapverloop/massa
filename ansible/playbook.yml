@@ -26,20 +26,20 @@
       action: user name=yoyo system=yes createhome=no state=present
       sudo: yes
 
-    - name: mount vagrant
+    - name: mount sourcecode
       action: mount fstype=vboxsf opts=uid=yoyo,gid=yoyo name={{ root }} src=/vagrant state=mounted
       sudo: yes
 
-    - name: install app dependencies
+    - name: install dependencies
       action: pip requirements={{ root }}/requirements.txt virtualenv={{ root }}/.virtualenv state=present virtualenv_site_packages=no
-      notify: restart yoyo
+      notify: restart app
 
     - name: create /etc/supervisor/conf.d/yoyo.conf
       action: template src=templates/supervisor.conf dest=/etc/supervisor/conf.d/yoyo.conf
       notify:
         - reread supervisorctl
         - update supervisorctl
-        - restart yoyo
+        - restart app
       sudo: yes
 
     - name: start supervisor
@@ -69,7 +69,7 @@
       action: command supervisorctl update
       sudo: yes
 
-    - name: restart yoyo
+    - name: restart app
       action: command supervisorctl restart yoyo
       sudo: yes
 
