@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   config.vm.provider "virtualbox" do |v|
-    v.name = "yoyo"
+    v.name = "massa"
   end
 
   # Enable provisioning with ansible, specifying an inventory file, and a

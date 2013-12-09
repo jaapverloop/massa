@@ -5,7 +5,7 @@ from flask.ext.appconfig import AppConfig
 
 
 def create_app(configfile=None):
-    app = Flask('yoyo')
+    app = Flask('massa')
     AppConfig(app, configfile)
 
     @app.route('/')

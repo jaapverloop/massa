@@ -1,7 +1,7 @@
 ---
 - hosts: vagrant
   vars:
-    - root: /srv/yoyo
+    - root: /srv/massa
   tasks:
     - name: update apt cache
       apt: update-cache=yes cache_valid_time=3600
@@ -23,19 +23,19 @@
       sudo: yes
 
     - name: create user
-      action: user name=yoyo system=yes createhome=no state=present
+      action: user name=massa system=yes createhome=no state=present
       sudo: yes
 
     - name: mount sourcecode
-      action: mount fstype=vboxsf opts=uid=yoyo,gid=yoyo name={{ root }} src=/vagrant state=mounted
+      action: mount fstype=vboxsf opts=uid=massa,gid=massa name={{ root }} src=/vagrant state=mounted
       sudo: yes
 
     - name: install dependencies
       action: pip requirements={{ root }}/requirements.txt virtualenv={{ root }}/.virtualenv state=present virtualenv_site_packages=no
       notify: restart app
 
-    - name: create /etc/supervisor/conf.d/yoyo.conf
-      action: template src=templates/supervisor.conf dest=/etc/supervisor/conf.d/yoyo.conf
+    - name: create /etc/supervisor/conf.d/massa.conf
+      action: template src=templates/supervisor.conf dest=/etc/supervisor/conf.d/massa.conf
       notify:
         - reread supervisorctl
         - update supervisorctl
@@ -51,8 +51,8 @@
       notify: restart nginx
       sudo: yes
 
-    - name: create /etc/nginx/sites-enabled/yoyo.conf
-      action: template src=templates/nginx.conf dest=/etc/nginx/sites-enabled/yoyo.conf
+    - name: create /etc/nginx/sites-enabled/massa.conf
+      action: template src=templates/nginx.conf dest=/etc/nginx/sites-enabled/massa.conf
       notify: restart nginx
       sudo: yes
 
@@ -70,7 +70,7 @@
       sudo: yes
 
     - name: restart app
-      action: command supervisorctl restart yoyo
+      action: command supervisorctl restart massa
       sudo: yes
 
     - name: restart nginx
