@@ -1,7 +1,8 @@
 massa
 =====
 
-Visualize your personal gym highlights.
+Measure and visualize your bodyweight and favorite gym excercises like squat,
+bench press and deadlift.
 
 
 License
