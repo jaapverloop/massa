@@ -29,7 +29,7 @@ should see the application.
 License
 -------
 
-MIT
+MIT, see ``LICENSE`` for more details.
 
 
 .. _VirtualBox: https://www.virtualbox.org/wiki/Downloads
