@@ -5,6 +5,13 @@ Measure and visualize your bodyweight and favorite gym excercises like squat,
 bench press and deadlift.
 
 
+Attention
+---------
+
+This is intended as a pet project and at an early stage of development. That
+said, everything is highly experimental and possibly littered with bugs.
+
+
 Development VM
 --------------
 
