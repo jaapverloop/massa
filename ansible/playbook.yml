@@ -28,7 +28,7 @@
       sudo: yes
 
     - name: create user
-      action: user name=massa system=yes createhome=no state=present
+      action: user name=massa system=yes state=present
       sudo: yes
 
     - name: mount sourcecode
