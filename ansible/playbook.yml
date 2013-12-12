@@ -2,6 +2,7 @@
 - hosts: vagrant
   vars:
     - root: /srv/massa
+    - pg_password: secret
   tasks:
     - name: update apt cache
       apt: update-cache=yes cache_valid_time=3600
@@ -17,8 +18,12 @@
         - python-dev
         - python-pip
         - python-virtualenv
+        - python-psycopg2
         - supervisor
         - nginx
+        - postgresql
+        - postgresql-contrib
+        - libpq-dev
       notify: restart nginx
       sudo: yes
 
@@ -60,6 +65,22 @@
       action: service name=nginx state=started enabled=yes
       sudo: yes
 
+    - name: create postgresql user
+      action: postgresql_user name=massa password={{ pg_password}} state=present role_attr_flags=NOSUPERUSER,NOCREATEDB,NOCREATEROLE
+      notify: restart postgresql
+      sudo: yes
+      sudo_user: postgres
+
+    - name: create postgresql db
+      action: postgresql_db name=massa owner=massa state=present encoding=UTF-8 lc_collate=en_US.UTF-8 lc_ctype=en_US.UTF-8 template=template0
+      notify: restart postgresql
+      sudo: yes
+      sudo_user: postgres
+
+    - name: start postgresql
+      action: service name=postgresql state=started enabled=yes
+      sudo: yes
+
   handlers:
     - name: reread supervisorctl
       action: command supervisorctl reread
@@ -75,4 +96,8 @@
 
     - name: restart nginx
       action: service name=nginx state=restarted
+      sudo: yes
+
+    - name: restart postgresql
+      action: service name=postgresql state=restarted
       sudo: yes
