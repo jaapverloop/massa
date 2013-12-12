@@ -38,6 +38,8 @@
     - name: install dependencies
       action: pip requirements={{ root }}/requirements.txt virtualenv={{ root }}/.virtualenv state=present
       notify: restart app
+      sudo: yes
+      sudo_user: massa
 
     - name: create /etc/supervisor/conf.d/massa.conf
       action: template src=templates/supervisor.conf dest=/etc/supervisor/conf.d/massa.conf
