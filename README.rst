@@ -32,6 +32,9 @@ Instructions to set up a development VM with Vagrant:
 Finally, point your browser to ``33.33.33.10``. If everything went well, you
 should see the application.
 
+You may want to use the vagrant-vbguest_ plugin to keep your VirtualBox Guest
+Additions up to date.
+
 
 License
 -------
@@ -42,3 +45,4 @@ MIT, see ``LICENSE`` for more details.
 .. _VirtualBox: https://www.virtualbox.org/wiki/Downloads
 .. _Vagrant: http://docs.vagrantup.com/v2/installation
 .. _Ansible: http://www.ansibleworks.com/docs/intro_installation.html
+.. _vagrant-vbguest: https://github.com/dotless-de/vagrant-vbguest
