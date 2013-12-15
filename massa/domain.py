@@ -28,3 +28,6 @@ def setup(app):
     )
 
     metadata.bind = engine
+
+def make_tables():
+    metadata.create_all()
