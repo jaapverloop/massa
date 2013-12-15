@@ -8,6 +8,7 @@ from sqlalchemy import (
     Numeric,
     String,
     Table,
+    create_engine,
 )
 
 
@@ -19,3 +20,11 @@ measurement = Table('measurement', metadata,
     Column('code', String(25), nullable=False),
     Column('date_measured', Date(), nullable=False),
 )
+
+def setup(app):
+    engine = create_engine(
+        app.config['SQLALCHEMY_DATABASE_URI'],
+        echo=app.config['SQLALCHEMY_ECHO']
+    )
+
+    metadata.bind = engine

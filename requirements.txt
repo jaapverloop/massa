@@ -8,5 +8,6 @@ argparse==1.2.1
 flask-appconfig==0.5
 gunicorn==18.0
 itsdangerous==0.23
+psycopg2==2.5.1
 setproctitle==1.1.8
 wsgiref==0.1.2

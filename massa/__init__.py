@@ -12,6 +12,9 @@ def create_app(configfile=None):
     def index():
         return render_template('index.html')
 
+    from .domain import setup
+    setup(app)
+
     from .api import bp
     app.register_blueprint(bp, url_prefix='/api')
 
