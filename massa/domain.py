@@ -31,3 +31,6 @@ def setup(app):
 
 def make_tables():
     metadata.create_all()
+
+def drop_tables():
+    metadata.drop_all()
