@@ -18,6 +18,7 @@ measurement = Table('measurement', metadata,
     Column('id', Integer, primary_key=True),
     Column('weight', Numeric(4, 1), nullable=False),
     Column('code', String(25), nullable=False),
+    Column('note', String(140), nullable=True),
     Column('date_measured', Date(), nullable=False),
 )
 
