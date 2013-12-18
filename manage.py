@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from flask import current_app
 from flask.ext.script import Manager, Server, prompt_bool
 from massa import create_app
-from massa.domain import make_tables, drop_tables
 
 
 manager = Manager(create_app)
@@ -15,16 +15,19 @@ manager.add_command('runserver', Server(
     port = 8080,
 ))
 
+
 @manager.command
 def dbmake():
   """Make all the db tables."""
-  make_tables()
+  current_app.sl('db').make_tables()
+
 
 @manager.command
 def dbdrop():
   """Drop all the db tables."""
   if prompt_bool('Are you sure you want to drop all the db tables?'):
-    drop_tables()
+    current_app.sl('db').drop_tables()
+
 
 if __name__ == '__main__':
     manager.run()

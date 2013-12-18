@@ -8,30 +8,30 @@ from sqlalchemy import (
     Numeric,
     String,
     Table,
-    create_engine,
 )
 
 
-metadata = MetaData()
-
-measurement = Table('measurement', metadata,
-    Column('id', Integer, primary_key=True),
-    Column('weight', Numeric(4, 1), nullable=False),
-    Column('code', String(25), nullable=False),
-    Column('note', String(140), nullable=True),
-    Column('date_measured', Date(), nullable=False),
-)
-
-def setup(app):
-    engine = create_engine(
-        app.config['SQLALCHEMY_DATABASE_URI'],
-        echo=app.config['SQLALCHEMY_ECHO']
+def define_tables(metadata):
+    Table('measurement', metadata,
+        Column('id', Integer, primary_key=True),
+        Column('weight', Numeric(4, 1), nullable=False),
+        Column('code', String(25), nullable=False),
+        Column('note', String(140), nullable=True),
+        Column('date_measured', Date(), nullable=False),
     )
 
-    metadata.bind = engine
 
-def make_tables():
-    metadata.create_all()
+class Db(object):
+    def __init__(self, engine):
+        self._meta = MetaData(engine)
+        define_tables(self._meta)
 
-def drop_tables():
-    metadata.drop_all()
+    def make_tables(self):
+        self._meta.create_all()
+
+    def drop_tables(self):
+        self._meta.drop_all()
+
+    @property
+    def measurement(self):
+        return self._meta.tables['measurement']
