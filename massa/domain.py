@@ -35,3 +35,8 @@ class Db(object):
     @property
     def measurement(self):
         return self._meta.tables['measurement']
+
+
+class MeasurementService(object):
+    def __init__(self, table):
+        self.table = table
