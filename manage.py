@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import current_app
+from flask import current_app, g
 from flask.ext.script import Manager, Server, prompt_bool
 from massa import create_app
 
@@ -19,14 +19,16 @@ manager.add_command('runserver', Server(
 @manager.command
 def dbmake():
   """Make all the db tables."""
-  current_app.sl('db').make_tables()
+  current_app.preprocess_request()
+  g.sl('db').make_tables()
 
 
 @manager.command
 def dbdrop():
   """Drop all the db tables."""
   if prompt_bool('Are you sure you want to drop all the db tables?'):
-    current_app.sl('db').drop_tables()
+    current_app.preprocess_request()
+    g.sl('db').drop_tables()
 
 
 if __name__ == '__main__':
