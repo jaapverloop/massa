@@ -43,8 +43,20 @@ class MeasurementService(object):
 
     def find_all(self):
         s = self._table.select()
-        return s.execute()
+
+        items = []
+        for item in s.execute():
+            items.append(self.make_exposable(item))
+
+        return items
 
     def create(self, **kwargs):
         i = self._table.insert()
         i.execute(**kwargs)
+
+    def make_exposable(self, measurement):
+        return {
+            'id': measurement.id,
+            'weight': float(measurement.weight),
+            'code': measurement.code,
+        }
