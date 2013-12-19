@@ -39,4 +39,4 @@ class Db(object):
 
 class MeasurementService(object):
     def __init__(self, table):
-        self.table = table
+        self._table = table
