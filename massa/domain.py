@@ -41,6 +41,11 @@ class MeasurementService(object):
     def __init__(self, table):
         self._table = table
 
+    def find(self, id):
+        stmt = self._table.select(self._table.c.id == id)
+        row = stmt.execute().fetchone()
+        return self.make_exposable(row)
+
     def find_all(self):
         s = self._table.select()
 
