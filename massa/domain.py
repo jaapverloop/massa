@@ -41,6 +41,10 @@ class MeasurementService(object):
     def __init__(self, table):
         self._table = table
 
+    def find_all(self):
+        s = self._table.select()
+        return s.execute()
+
     def create(self, **kwargs):
         i = self._table.insert()
         i.execute(**kwargs)
