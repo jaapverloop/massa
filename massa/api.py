@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint
+from flask import Blueprint, jsonify, g
 from flask.views import MethodView
 
 
 class MeasurementList(MethodView):
     def get(self):
-        return 'GET: measurement list'
+        service = g.sl('measurement_service')
+        return jsonify(items=service.find_all())
+
 
 class MeasurementItem(MethodView):
     def get(self, id):
-        return 'GET: measurement item with ID %s' % id
+        service = g.sl('measurement_service')
+        return jsonify(service.find(id))
 
 
 bp = Blueprint('api', __name__)
