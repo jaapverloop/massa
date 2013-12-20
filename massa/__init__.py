@@ -2,6 +2,8 @@
 
 from flask import Flask, render_template, g
 from flask.ext.appconfig import AppConfig
+from .container import build
+from .api import bp as api
 
 
 def create_app(configfile=None):
@@ -12,11 +14,9 @@ def create_app(configfile=None):
     def index():
         return render_template('index.html')
 
-    from .container import build
     sl = build(app.config)
 
-    from .api import bp
-    app.register_blueprint(bp, url_prefix='/api')
+    app.register_blueprint(api, url_prefix='/api')
 
     @app.before_request
     def globals():
