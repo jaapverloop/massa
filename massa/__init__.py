@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, render_template, g
-from flask.ext.appconfig import AppConfig
 from .container import build
 from .web import bp as web
 from .api import bp as api
 
 
-def create_app(configfile=None):
+def create_app(config=None):
     app = Flask('massa')
-    AppConfig(app, configfile)
+    app.config.from_object(config or 'massa.config.Production')
 
     sl = build(app.config)
 
