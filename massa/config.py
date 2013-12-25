@@ -9,7 +9,6 @@ class Production(object):
     SECRET_KEY = '##CHANGEME##'
     SQLALCHEMY_DATABASE_URI = 'postgresql://massa:secret@localhost/massa'
     SQLALCHEMY_ECHO = False
-    LOGGER_FILENAME = 'massa.log'
 
 
 class Development(Production):

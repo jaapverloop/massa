@@ -24,7 +24,7 @@ def build(app):
     @c.factory(cache=True)
     def logger(c):
         handler = RotatingFileHandler(
-            c['LOGGER_FILENAME'],
+            c('LOGGER_FILENAME', '{}.log'.format(app.name)),
             maxBytes=c('LOGGER_MAX_BYTES', 1024*1024),
             backupCount=c('LOGGER_BACKUP_COUNT', 3)
         )
