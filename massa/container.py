@@ -29,11 +29,11 @@ def build(app):
             backupCount=c('LOGGER_BACKUP_COUNT', 3)
         )
 
-        handler.setLevel(c('LOGGER_LEVEL', logging.INFO))
         handler.setFormatter(logging.Formatter(
             c('LOGGER_FORMAT', "%(asctime)s %(levelname)s: %(message)s")
         ))
 
+        app.logger.setLevel(c('LOGGER_LEVEL', logging.INFO))
         app.logger.addHandler(handler)
 
         return app.logger
