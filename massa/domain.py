@@ -58,7 +58,8 @@ class MeasurementService(object):
 
     def create(self, **kwargs):
         stmt = self._table.insert()
-        stmt.execute(**kwargs)
+        result = stmt.execute(**kwargs)
+        return result.inserted_primary_key[0]
 
     def make_exposable(self, measurement):
         return {
