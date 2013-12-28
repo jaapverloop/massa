@@ -61,6 +61,10 @@ class MeasurementService(object):
         result = stmt.execute(**kwargs)
         return result.inserted_primary_key[0]
 
+    def update(self, id, **kwargs):
+        stmt = self._table.update(self._table.c.id == id)
+        stmt.execute(**kwargs)
+
     def make_exposable(self, measurement):
         return {
             'id': measurement.id,

@@ -23,6 +23,11 @@ class MeasurementItem(MethodView):
         service = g.sl('measurement_service')
         return jsonify(service.find(id))
 
+    def put(self, id):
+        service = g.sl('measurement_service')
+        service.update(id, **request.form.to_dict())
+        return '', 204
+
 
 bp = Blueprint('api', __name__)
 
@@ -35,5 +40,5 @@ bp.add_url_rule(
 bp.add_url_rule(
     '/measurements/<id>',
     view_func=MeasurementItem.as_view('measurement_item'),
-    methods=['GET']
+    methods=['GET', 'PUT']
 )
