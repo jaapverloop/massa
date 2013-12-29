@@ -28,6 +28,11 @@ class MeasurementItem(MethodView):
         service.update(id, **request.form.to_dict())
         return '', 204
 
+    def delete(self, id):
+        service = g.sl('measurement_service')
+        service.delete(id)
+        return '', 204
+
 
 bp = Blueprint('api', __name__)
 
@@ -40,5 +45,5 @@ bp.add_url_rule(
 bp.add_url_rule(
     '/measurements/<id>',
     view_func=MeasurementItem.as_view('measurement_item'),
-    methods=['GET', 'PUT']
+    methods=['GET', 'PUT', 'DELETE']
 )

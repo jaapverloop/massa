@@ -65,6 +65,10 @@ class MeasurementService(object):
         stmt = self._table.update(self._table.c.id == id)
         stmt.execute(**kwargs)
 
+    def delete(self, id):
+        stmt = self._table.delete(self._table.c.id == id)
+        stmt.execute()
+
     def make_exposable(self, measurement):
         return {
             'id': measurement.id,
