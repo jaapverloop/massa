@@ -4,6 +4,7 @@ from flask import Flask, render_template, g
 from .container import build
 from .web import bp as web
 from .api import bp as api
+from .middleware import HTTPMethodOverrideMiddleware
 
 
 def create_app(config=None):
@@ -20,4 +21,5 @@ def create_app(config=None):
     def globals():
         g.sl = sl
 
+    app.wsgi_app = HTTPMethodOverrideMiddleware(app.wsgi_app)
     return app
