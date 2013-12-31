@@ -21,6 +21,12 @@ def define_tables(metadata):
     )
 
 
+class EntityNotFoundError(Exception):
+    """Raised when an entity does not exist."""
+    def __init__(self, msg):
+        self.msg = msg
+
+
 class Db(object):
     def __init__(self, engine):
         self._meta = MetaData(engine)
@@ -44,6 +50,10 @@ class MeasurementService(object):
     def find(self, id):
         stmt = self._table.select(self._table.c.id == id)
         row = stmt.execute().fetchone()
+
+        if not row:
+            raise EntityNotFoundError('Measurement does not exist')
+
         return self.make_exposable(row)
 
     def find_all(self):
@@ -62,10 +72,14 @@ class MeasurementService(object):
         return result.inserted_primary_key[0]
 
     def update(self, id, **kwargs):
+        entity = self.find(id)
+
         stmt = self._table.update(self._table.c.id == id)
         stmt.execute(**kwargs)
 
     def delete(self, id):
+        entity = self.find(id)
+
         stmt = self._table.delete(self._table.c.id == id)
         stmt.execute()
 
