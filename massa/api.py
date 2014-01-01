@@ -2,6 +2,18 @@
 
 from flask import Blueprint, jsonify, g, request, Response, url_for
 from flask.views import MethodView
+from .domain import EntityNotFoundError
+
+
+def return_or_catch(f):
+    def wrapper(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except EntityNotFoundError as e:
+            response = Response(e.msg, status=404, mimetype='text/plain')
+            return response
+
+    return wrapper
 
 
 class MeasurementList(MethodView):
@@ -19,15 +31,18 @@ class MeasurementList(MethodView):
 
 
 class MeasurementItem(MethodView):
+    @return_or_catch
     def get(self, id):
         service = g.sl('measurement_service')
         return jsonify(service.find(id))
 
+    @return_or_catch
     def put(self, id):
         service = g.sl('measurement_service')
         service.update(id, **request.form.to_dict())
         return '', 204
 
+    @return_or_catch
     def delete(self, id):
         service = g.sl('measurement_service')
         service.delete(id)
