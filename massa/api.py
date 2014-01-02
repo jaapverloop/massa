@@ -10,8 +10,7 @@ def return_or_catch(f):
         try:
             return f(*args, **kwargs)
         except EntityNotFoundError as e:
-            response = Response(e.msg, status=404, mimetype='text/plain')
-            return response
+            return jsonify(error=e.msg), 404
 
     return wrapper
 
