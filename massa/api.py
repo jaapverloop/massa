@@ -10,7 +10,7 @@ def return_or_catch(f):
         try:
             return f(*args, **kwargs)
         except EntityNotFoundError as e:
-            return jsonify(error=e.msg), 404
+            return jsonify(status_code=404, message=e.msg), 404
 
     return wrapper
 
