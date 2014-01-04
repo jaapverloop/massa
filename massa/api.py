@@ -39,13 +39,13 @@ class MeasurementItem(MethodView):
     def put(self, id):
         service = g.sl('measurement_service')
         service.update(id, **request.form.to_dict())
-        return '', 204
+        return jsonify(status_code=204), 204
 
     @return_or_catch
     def delete(self, id):
         service = g.sl('measurement_service')
         service.delete(id)
-        return '', 204
+        return jsonify(status_code=204), 204
 
 
 bp = Blueprint('api', __name__)
