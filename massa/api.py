@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, jsonify, g, request, Response, url_for
+from flask import Blueprint, jsonify, g, request, url_for
 from flask.views import MethodView
 from .domain import EntityNotFoundError
 
@@ -24,9 +24,9 @@ class MeasurementList(MethodView):
         service = g.sl('measurement_service')
         id = service.create(**request.form.to_dict())
         location = url_for('api.measurement_item', id=id)
-        response = Response(location, status=201, mimetype='text/plain')
+        response = jsonify(status_code=201, location=location)
         response.headers['Location'] = location
-        return response
+        return response, 201
 
 
 class MeasurementItem(MethodView):
