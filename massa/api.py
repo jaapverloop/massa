@@ -23,7 +23,7 @@ class MeasurementList(MethodView):
     def post(self):
         service = g.sl('measurement_service')
         id = service.create(**request.form.to_dict())
-        location = url_for('api.measurement_item', id=id)
+        location = url_for('api.measurement_item', id=id, _external=True)
         response = jsonify(status_code=201, location=location)
         response.headers['Location'] = location
         return response, 201
