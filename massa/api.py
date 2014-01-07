@@ -5,7 +5,7 @@ from flask.views import MethodView
 from .domain import EntityNotFoundError
 
 
-def return_or_catch(f):
+def endpoint(f):
     def wrapper(*args, **kwargs):
         try:
             return f(*args, **kwargs)
@@ -30,7 +30,7 @@ class MeasurementList(MethodView):
 
 
 class MeasurementItem(MethodView):
-    decorators = [return_or_catch]
+    decorators = [endpoint]
 
     def get(self, id):
         service = g.sl('measurement_service')
