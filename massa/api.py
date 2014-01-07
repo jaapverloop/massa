@@ -30,18 +30,17 @@ class MeasurementList(MethodView):
 
 
 class MeasurementItem(MethodView):
-    @return_or_catch
+    decorators = [return_or_catch]
+
     def get(self, id):
         service = g.sl('measurement_service')
         return jsonify(service.find(id))
 
-    @return_or_catch
     def put(self, id):
         service = g.sl('measurement_service')
         service.update(id, **request.form.to_dict())
         return jsonify(status_code=204), 204
 
-    @return_or_catch
     def delete(self, id):
         service = g.sl('measurement_service')
         service.delete(id)
