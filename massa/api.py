@@ -16,6 +16,8 @@ def endpoint(f):
 
 
 class MeasurementList(MethodView):
+    decorators = [endpoint]
+
     def get(self):
         service = g.sl('measurement_service')
         return jsonify(items=service.find_all())
