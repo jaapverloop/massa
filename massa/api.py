@@ -15,9 +15,11 @@ def endpoint(f):
     return wrapper
 
 
-class MeasurementList(MethodView):
+class ApiView(MethodView):
     decorators = [endpoint]
 
+
+class MeasurementList(ApiView):
     def get(self):
         service = g.sl('measurement_service')
         return jsonify(items=service.find_all())
@@ -31,9 +33,7 @@ class MeasurementList(MethodView):
         return response, 201
 
 
-class MeasurementItem(MethodView):
-    decorators = [endpoint]
-
+class MeasurementItem(ApiView):
     def get(self, id):
         service = g.sl('measurement_service')
         return jsonify(service.find(id))
