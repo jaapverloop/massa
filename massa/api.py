@@ -8,9 +8,22 @@ from .domain import EntityNotFoundError
 def endpoint(f):
     def wrapper(*args, **kwargs):
         try:
-            return f(*args, **kwargs)
+            rv = f(*args, **kwargs)
         except EntityNotFoundError as e:
-            return jsonify(status_code=404, message=e.msg), 404
+            rv = {'message': e.msg}, 404
+
+        msg = [rv, 200, {}]
+        if isinstance(rv, tuple):
+            for index, value in enumerate(rv):
+                msg[index] = value
+
+        body, code, headers = msg
+
+        response = jsonify(body)
+        for key, value in headers.iteritems():
+            response.headers[key] = value
+
+        return response, code
 
     return wrapper
 
@@ -22,31 +35,29 @@ class ApiView(MethodView):
 class MeasurementList(ApiView):
     def get(self):
         service = g.sl('measurement_service')
-        return jsonify(items=service.find_all())
+        return {'items': service.find_all()}
 
     def post(self):
         service = g.sl('measurement_service')
         id = service.create(**request.form.to_dict())
         location = url_for('api.measurement_item', id=id, _external=True)
-        response = jsonify(status_code=201, location=location)
-        response.headers['Location'] = location
-        return response, 201
+        return {'id': id}, 201, {'Location': location}
 
 
 class MeasurementItem(ApiView):
     def get(self, id):
         service = g.sl('measurement_service')
-        return jsonify(service.find(id))
+        return service.find(id)
 
     def put(self, id):
         service = g.sl('measurement_service')
         service.update(id, **request.form.to_dict())
-        return jsonify(status_code=204), 204
+        return '', 204
 
     def delete(self, id):
         service = g.sl('measurement_service')
         service.delete(id)
-        return jsonify(status_code=204), 204
+        return '', 204
 
 
 bp = Blueprint('api', __name__)
