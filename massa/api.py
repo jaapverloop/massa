@@ -28,6 +28,10 @@ def endpoint(f):
     return wrapper
 
 
+def payload():
+    return request.get_json() or request.form.to_dict()
+
+
 class ApiView(MethodView):
     decorators = [endpoint]
 
@@ -39,7 +43,7 @@ class MeasurementList(ApiView):
 
     def post(self):
         service = g.sl('measurement_service')
-        id = service.create(**request.form.to_dict())
+        id = service.create(**payload())
         location = url_for('api.measurement_item', id=id, _external=True)
         return {'id': id}, 201, {'Location': location}
 
@@ -51,7 +55,7 @@ class MeasurementItem(ApiView):
 
     def put(self, id):
         service = g.sl('measurement_service')
-        service.update(id, **request.form.to_dict())
+        service.update(id, **payload())
         return '', 204
 
     def delete(self, id):
