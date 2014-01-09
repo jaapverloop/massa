@@ -47,7 +47,7 @@ class MeasurementList(ApiView):
 class MeasurementItem(ApiView):
     def get(self, id):
         service = g.sl('measurement_service')
-        return service.find(id)
+        return service.get(id)
 
     def put(self, id):
         service = g.sl('measurement_service')

@@ -47,7 +47,7 @@ class MeasurementService(object):
     def __init__(self, table):
         self._table = table
 
-    def find(self, id):
+    def get(self, id):
         stmt = self._table.select(self._table.c.id == id)
         row = stmt.execute().fetchone()
 
@@ -72,13 +72,13 @@ class MeasurementService(object):
         return result.inserted_primary_key[0]
 
     def update(self, id, **kwargs):
-        entity = self.find(id)
+        entity = self.get(id)
 
         stmt = self._table.update(self._table.c.id == id)
         stmt.execute(**kwargs)
 
     def delete(self, id):
-        entity = self.find(id)
+        entity = self.get(id)
 
         stmt = self._table.delete(self._table.c.id == id)
         stmt.execute()
