@@ -45,7 +45,7 @@ class MeasurementList(ApiView):
         service = g.sl('measurement_service')
         id = service.create(**payload())
         location = url_for('api.measurement_item', id=id, _external=True)
-        return {'id': id}, 201, {'Location': location}
+        return service.get(id), 201, {'Location': location}
 
 
 class MeasurementItem(ApiView):
@@ -56,7 +56,7 @@ class MeasurementItem(ApiView):
     def put(self, id):
         service = g.sl('measurement_service')
         service.update(id, **payload())
-        return '', 204
+        return service.get(id), 200
 
     def delete(self, id):
         service = g.sl('measurement_service')
