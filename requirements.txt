@@ -9,5 +9,6 @@ gunicorn==18.0
 itsdangerous==0.23
 knot==0.2.0
 psycopg2==2.5.1
+schematics==0.9-4
 setproctitle==1.1.8
 wsgiref==0.1.2

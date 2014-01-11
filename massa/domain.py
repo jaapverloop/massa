@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from schematics.models import Model
+from schematics.types import StringType, DateType, DecimalType
 from sqlalchemy import (
     Column,
     Date,
@@ -43,6 +45,18 @@ class Db(object):
         return self._meta.tables['measurement']
 
 
+class InputMeasurementCreate(Model):
+    weight = DecimalType(required=True)
+    code = StringType(required=True, choices=[
+        'BODYWEIGHT',
+        'SQUAT',
+        'BENCHPRESS',
+        'DEADLIFT'
+        ])
+    note = StringType(required=False, max_length=140)
+    date_measured = DateType()
+
+
 class MeasurementService(object):
     def __init__(self, table):
         self._table = table
@@ -67,6 +81,9 @@ class MeasurementService(object):
         return items
 
     def create(self, **kwargs):
+        input = InputMeasurementCreate(kwargs)
+        input.validate()
+
         stmt = self._table.insert()
         result = stmt.execute(**kwargs)
         return result.inserted_primary_key[0]
