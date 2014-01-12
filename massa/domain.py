@@ -25,8 +25,8 @@ def define_tables(metadata):
 
 class EntityNotFoundError(Exception):
     """Raised when an entity does not exist."""
-    def __init__(self, msg):
-        self.msg = msg
+    def __init__(self, message):
+        self.message = message
 
 
 class Db(object):

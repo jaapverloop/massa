@@ -10,7 +10,7 @@ def endpoint(f):
         try:
             rv = f(*args, **kwargs)
         except EntityNotFoundError as e:
-            rv = {'message': e.msg}, 404
+            rv = {'message': e.message}, 404
 
         msg = [rv, 200, {}]
         if isinstance(rv, tuple):
