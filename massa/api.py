@@ -2,7 +2,7 @@
 
 from flask import Blueprint, jsonify, g, request, url_for
 from flask.views import MethodView
-from .domain import EntityNotFoundError
+from .domain import EntityNotFoundError, InvalidInputError
 
 
 def endpoint(f):
@@ -11,6 +11,8 @@ def endpoint(f):
             rv = f(*args, **kwargs)
         except EntityNotFoundError as e:
             rv = {'message': e.message}, 404
+        except InvalidInputError as e:
+            rv = {'message': e.message}, 400
 
         msg = [rv, 200, {}]
         if isinstance(rv, tuple):

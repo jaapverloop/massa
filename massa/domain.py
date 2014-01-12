@@ -2,6 +2,7 @@
 
 from schematics.models import Model
 from schematics.types import StringType, DateType, DecimalType
+from schematics.exceptions import BaseError as ValidationError
 from sqlalchemy import (
     Column,
     Date,
@@ -23,8 +24,22 @@ def define_tables(metadata):
     )
 
 
+def validate(schema, data):
+    try:
+        schema.import_data(data)
+        schema.validate()
+    except ValidationError as e:
+        raise InvalidInputError('Input data invalid')
+
+
 class EntityNotFoundError(Exception):
     """Raised when an entity does not exist."""
+    def __init__(self, message):
+        self.message = message
+
+
+class InvalidInputError(Exception):
+    """Raised when input data is invalid."""
     def __init__(self, message):
         self.message = message
 
@@ -81,8 +96,8 @@ class MeasurementService(object):
         return items
 
     def create(self, **kwargs):
-        input = InputMeasurementCreate(kwargs)
-        input.validate()
+        schema = InputMeasurementCreate()
+        validate(schema, kwargs)
 
         stmt = self._table.insert()
         result = stmt.execute(**kwargs)
