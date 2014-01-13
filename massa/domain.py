@@ -32,6 +32,13 @@ def validate(schema, data):
         raise InvalidInputError('Input data invalid')
 
 
+def is_weight(value):
+    if abs(value.as_tuple().exponent) > 1:
+        raise ValidationError('More than one decimal exponent not allowed')
+
+    return value
+
+
 class EntityNotFoundError(Exception):
     """Raised when an entity does not exist."""
     def __init__(self, message):
@@ -61,7 +68,7 @@ class Db(object):
 
 
 class InputMeasurementCreate(Model):
-    weight = DecimalType(required=True)
+    weight = DecimalType(required=True, validators=[is_weight])
     code = StringType(required=True, choices=[
         'BODYWEIGHT',
         'SQUAT',
