@@ -2,7 +2,7 @@
 
 from schematics.models import Model
 from schematics.types import StringType, DateType, DecimalType
-from schematics.exceptions import BaseError as ValidationError
+from schematics.exceptions import ConversionError, ValidationError
 from sqlalchemy import (
     Column,
     Date,
@@ -28,7 +28,7 @@ def validate(schema, data):
     try:
         schema.import_data(data)
         schema.validate()
-    except ValidationError as e:
+    except (ConversionError, ValidationError) as e:
         raise InvalidInputError('Input data invalid')
 
 
