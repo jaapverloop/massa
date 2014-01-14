@@ -127,4 +127,5 @@ class MeasurementService(object):
             'id': measurement.id,
             'weight': float(measurement.weight),
             'code': measurement.code,
+            'note': measurement.note,
         }
