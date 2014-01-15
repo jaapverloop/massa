@@ -67,7 +67,7 @@ class Db(object):
         return self._meta.tables['measurement']
 
 
-class InputMeasurementCreate(Model):
+class InputMeasurement(Model):
     weight = DecimalType(required=True, validators=[is_weight])
     code = StringType(required=True, choices=[
         'BODYWEIGHT',
@@ -103,7 +103,7 @@ class MeasurementService(object):
         return items
 
     def create(self, **kwargs):
-        schema = InputMeasurementCreate()
+        schema = InputMeasurement()
         validate(schema, kwargs)
 
         stmt = self._table.insert()
@@ -112,6 +112,9 @@ class MeasurementService(object):
 
     def update(self, id, **kwargs):
         entity = self.get(id)
+
+        schema = InputMeasurement()
+        validate(schema, kwargs)
 
         stmt = self._table.update(self._table.c.id == id)
         stmt.execute(**kwargs)
