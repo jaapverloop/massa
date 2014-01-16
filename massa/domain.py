@@ -131,4 +131,5 @@ class MeasurementService(object):
             'weight': float(measurement.weight),
             'code': measurement.code,
             'note': measurement.note,
+            'date_measured': measurement.date_measured.isoformat(),
         }
