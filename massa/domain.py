@@ -39,16 +39,17 @@ def is_weight(value):
     return value
 
 
-class EntityNotFoundError(Exception):
+class DomainError(Exception):
+    def __init__(self, message):
+        self.message = message
+
+
+class EntityNotFoundError(DomainError):
     """Raised when an entity does not exist."""
-    def __init__(self, message):
-        self.message = message
 
 
-class InvalidInputError(Exception):
+class InvalidInputError(DomainError):
     """Raised when input data is invalid."""
-    def __init__(self, message):
-        self.message = message
 
 
 class Db(object):
