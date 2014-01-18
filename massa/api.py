@@ -12,7 +12,7 @@ def endpoint(f):
         except EntityNotFoundError as e:
             rv = {'message': e.message}, 404
         except InvalidInputError as e:
-            rv = {'message': e.message}, 400
+            rv = {'message': e.message, 'details': e.details}, 400
 
         msg = [rv, 200, {}]
         if isinstance(rv, tuple):

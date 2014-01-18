@@ -29,7 +29,7 @@ def validate(schema, data):
         schema.import_data(data)
         schema.validate()
     except (ConversionError, ValidationError) as e:
-        raise InvalidInputError('Input data invalid')
+        raise InvalidInputError('Input data invalid', e.messages)
 
 
 def is_weight(value):
@@ -40,8 +40,9 @@ def is_weight(value):
 
 
 class DomainError(Exception):
-    def __init__(self, message):
+    def __init__(self, message, details=None):
         self.message = message
+        self.details = details
 
 
 class EntityNotFoundError(DomainError):
