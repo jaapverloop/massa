@@ -78,7 +78,7 @@ class InputMeasurement(Model):
         'DEADLIFT'
         ])
     note = StringType(required=False, max_length=140)
-    date_measured = DateType()
+    date_measured = DateType(required=True)
 
 
 class MeasurementService(object):
