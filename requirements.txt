@@ -11,4 +11,5 @@ knot==0.2.0
 psycopg2==2.5.1
 schematics==0.9-4
 setproctitle==1.1.8
+simplejson==3.3.2
 wsgiref==0.1.2

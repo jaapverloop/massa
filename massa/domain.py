@@ -130,7 +130,7 @@ class MeasurementService(object):
     def make_exposable(self, measurement):
         return {
             'id': measurement.id,
-            'weight': float(measurement.weight),
+            'weight': measurement.weight,
             'code': measurement.code,
             'note': measurement.note,
             'date_measured': measurement.date_measured.isoformat(),
