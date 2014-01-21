@@ -71,11 +71,9 @@ bp = Blueprint('api', __name__)
 bp.add_url_rule(
     '/measurements/',
     view_func=MeasurementList.as_view('measurement_list'),
-    methods=['GET', 'POST']
 )
 
 bp.add_url_rule(
     '/measurements/<id>',
     view_func=MeasurementItem.as_view('measurement_item'),
-    methods=['GET', 'PUT', 'DELETE']
 )
