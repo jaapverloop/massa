@@ -7,12 +7,7 @@ from .domain import EntityNotFoundError, InvalidInputError
 
 def endpoint(f):
     def wrapper(*args, **kwargs):
-        try:
-            rv = f(*args, **kwargs)
-        except EntityNotFoundError as e:
-            rv = {'message': e.message}, 404
-        except InvalidInputError as e:
-            rv = {'message': e.message, 'details': e.details}, 400
+        rv = f(*args, **kwargs)
 
         msg = [rv, 200, {}]
         if isinstance(rv, tuple):
@@ -32,6 +27,14 @@ def endpoint(f):
 
 def payload():
     return request.get_json() or request.form.to_dict()
+
+
+def entity_not_found_handler(e):
+    return jsonify({'message': e.message}), 404
+
+
+def invalid_input_handler(e):
+    return jsonify({'message': e.message, 'details': e.details}), 400
 
 
 class ApiView(MethodView):
@@ -67,6 +70,8 @@ class MeasurementItem(ApiView):
 
 
 bp = Blueprint('api', __name__)
+bp.app_errorhandler(EntityNotFoundError)(entity_not_found_handler)
+bp.app_errorhandler(InvalidInputError)(invalid_input_handler)
 
 bp.add_url_rule(
     '/measurements/',
