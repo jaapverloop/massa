@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 from schematics.models import Model
 from schematics.types import StringType, DateType, DecimalType
 from schematics.exceptions import ConversionError, ValidationError
 from sqlalchemy import (
     Column,
-    Date,
+    DateTime,
     Integer,
     MetaData,
     Numeric,
@@ -20,7 +21,7 @@ def define_tables(metadata):
         Column('weight', Numeric(4, 1), nullable=False),
         Column('code', String(25), nullable=False),
         Column('note', String(140), nullable=True),
-        Column('date_measured', Date(), nullable=False),
+        Column('created_at', DateTime(), nullable=False, default=datetime.utcnow),
     )
 
 
@@ -78,7 +79,6 @@ class InputMeasurement(Model):
         'DEADLIFT'
         ])
     note = StringType(required=False, max_length=140)
-    date_measured = DateType(required=True)
 
 
 class MeasurementService(object):
@@ -133,5 +133,5 @@ class MeasurementService(object):
             'weight': measurement.weight,
             'code': measurement.code,
             'note': measurement.note,
-            'date_measured': measurement.date_measured.isoformat(),
+            'created_at': measurement.created_at.isoformat(),
         }
