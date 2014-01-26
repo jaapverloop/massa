@@ -78,7 +78,7 @@ class InputMeasurement(Model):
         'BENCHPRESS',
         'DEADLIFT'
         ])
-    note = StringType(required=False, max_length=140)
+    note = StringType(max_length=140)
 
 
 class MeasurementService(object):
