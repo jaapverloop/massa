@@ -30,7 +30,7 @@ def validate(schema, data):
         schema.import_data(data)
         schema.validate()
     except (ConversionError, ValidationError) as e:
-        raise InvalidInputError('Input data invalid', e.messages)
+        raise InvalidInputError(details=e.messages)
 
 
 def is_weight(value):
@@ -41,17 +41,19 @@ def is_weight(value):
 
 
 class DomainError(Exception):
-    def __init__(self, message, details=None):
-        self.message = message
-        self.details = details
+    def __init__(self, message=None, details=None):
+        if message: self.message = message
+        if details: self.details = details
 
 
 class EntityNotFoundError(DomainError):
     """Raised when an entity does not exist."""
+    message = 'Entity does not exist.'
 
 
 class InvalidInputError(DomainError):
     """Raised when input data is invalid."""
+    message = 'Input data is invalid.'
 
 
 class Db(object):
@@ -90,7 +92,7 @@ class MeasurementService(object):
         row = stmt.execute().fetchone()
 
         if not row:
-            raise EntityNotFoundError('Measurement does not exist')
+            raise EntityNotFoundError()
 
         return self.make_exposable(row)
 
