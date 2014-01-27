@@ -75,7 +75,6 @@ class Db(object):
 class InputMeasurement(Model):
     weight = DecimalType(required=True, validators=[is_weight])
     code = StringType(required=True, choices=[
-        'BODYWEIGHT',
         'SQUAT',
         'BENCHPRESS',
         'DEADLIFT'
