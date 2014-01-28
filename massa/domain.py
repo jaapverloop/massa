@@ -19,7 +19,7 @@ def define_tables(metadata):
     Table('exertion', metadata,
         Column('id', Integer, primary_key=True),
         Column('weight', Numeric(4, 1), nullable=False),
-        Column('code', String(25), nullable=False),
+        Column('exercise', String(25), nullable=False),
         Column('note', String(140), nullable=True),
         Column('created_at', DateTime(), nullable=False, default=datetime.utcnow),
     )
@@ -74,7 +74,7 @@ class Db(object):
 
 class InputExertion(Model):
     weight = DecimalType(required=True, validators=[is_weight])
-    code = StringType(required=True, choices=[
+    exercise = StringType(required=True, choices=[
         'SQUAT',
         'BENCHPRESS',
         'DEADLIFT'
@@ -132,7 +132,7 @@ class ExertionService(object):
         return {
             'id': exertion.id,
             'weight': exertion.weight,
-            'code': exertion.code,
+            'exercise': exertion.exercise,
             'note': exertion.note,
             'created_at': exertion.created_at.isoformat(),
         }
