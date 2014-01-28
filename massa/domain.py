@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from schematics.models import Model
-from schematics.types import StringType, DateType, DecimalType
+from schematics.types import StringType, DateType, DecimalType, IntType
 from schematics.exceptions import ConversionError, ValidationError
 from sqlalchemy import (
     Column,
@@ -20,6 +20,7 @@ def define_tables(metadata):
         Column('id', Integer, primary_key=True),
         Column('weight', Numeric(4, 1), nullable=False),
         Column('exercise', String(25), nullable=False),
+        Column('reps', Integer(3), nullable=False, default=1),
         Column('note', String(140), nullable=True),
         Column('created_at', DateTime(), nullable=False, default=datetime.utcnow),
     )
@@ -79,6 +80,7 @@ class InputExertion(Model):
         'BENCHPRESS',
         'DEADLIFT'
         ])
+    reps = IntType(min_value=1, max_value=100)
     note = StringType(max_length=140)
 
 
@@ -133,6 +135,7 @@ class ExertionService(object):
             'id': exertion.id,
             'weight': exertion.weight,
             'exercise': exertion.exercise,
+            'reps': exertion.reps,
             'note': exertion.note,
             'created_at': exertion.created_at.isoformat(),
         }
