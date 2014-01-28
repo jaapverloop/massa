@@ -41,30 +41,30 @@ class ApiView(MethodView):
     decorators = [endpoint]
 
 
-class MeasurementList(ApiView):
+class ExertionList(ApiView):
     def get(self):
-        service = g.sl('measurement_service')
+        service = g.sl('exertion_service')
         return {'items': service.find_all()}
 
     def post(self):
-        service = g.sl('measurement_service')
+        service = g.sl('exertion_service')
         id = service.create(**payload())
-        location = url_for('api.measurement_item', id=id, _external=True)
+        location = url_for('api.exertion_item', id=id, _external=True)
         return service.get(id), 201, {'Location': location}
 
 
-class MeasurementItem(ApiView):
+class ExertionItem(ApiView):
     def get(self, id):
-        service = g.sl('measurement_service')
+        service = g.sl('exertion_service')
         return service.get(id)
 
     def put(self, id):
-        service = g.sl('measurement_service')
+        service = g.sl('exertion_service')
         service.update(id, **payload())
         return service.get(id), 200
 
     def delete(self, id):
-        service = g.sl('measurement_service')
+        service = g.sl('exertion_service')
         service.delete(id)
         return '', 204
 
@@ -74,11 +74,11 @@ bp.app_errorhandler(EntityNotFoundError)(entity_not_found_handler)
 bp.app_errorhandler(InvalidInputError)(invalid_input_handler)
 
 bp.add_url_rule(
-    '/measurements/',
-    view_func=MeasurementList.as_view('measurement_list'),
+    '/exertions/',
+    view_func=ExertionList.as_view('exertion_list'),
 )
 
 bp.add_url_rule(
-    '/measurements/<id>',
-    view_func=MeasurementItem.as_view('measurement_item'),
+    '/exertions/<id>',
+    view_func=ExertionItem.as_view('exertion_item'),
 )

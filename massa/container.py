@@ -4,7 +4,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 from knot import Container
 from sqlalchemy import create_engine
-from .domain import Db, MeasurementService
+from .domain import Db, ExertionService
 
 
 def build(app):
@@ -18,8 +18,8 @@ def build(app):
         ))
 
     @c.factory(cache=True)
-    def measurement_service(c):
-        return MeasurementService(c('db').measurement)
+    def exertion_service(c):
+        return ExertionService(c('db').exertion)
 
     @c.factory(cache=True)
     def logger(c):
