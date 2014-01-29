@@ -20,6 +20,7 @@ def define_tables(metadata):
         Column('id', Integer, primary_key=True),
         Column('weight', Numeric(4, 1), nullable=False),
         Column('exercise', String(25), nullable=False),
+        Column('sets', Integer(3), nullable=False, default=1),
         Column('reps', Integer(3), nullable=False, default=1),
         Column('note', String(140), nullable=True),
         Column('created_at', DateTime(), nullable=False, default=datetime.utcnow),
@@ -80,6 +81,7 @@ class InputExertion(Model):
         'BENCHPRESS',
         'DEADLIFT'
         ])
+    sets = IntType(min_value=1, max_value=100)
     reps = IntType(min_value=1, max_value=100)
     note = StringType(max_length=140)
 
@@ -135,6 +137,7 @@ class ExertionService(object):
             'id': exertion.id,
             'weight': exertion.weight,
             'exercise': exertion.exercise,
+            'sets': exertion.sets,
             'reps': exertion.reps,
             'note': exertion.note,
             'created_at': exertion.created_at.isoformat(),
