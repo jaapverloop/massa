@@ -22,7 +22,7 @@ def define_tables(metadata):
         Column('exercise', String(25), nullable=False),
         Column('sets', Integer(3), nullable=False, default=1),
         Column('reps', Integer(3), nullable=False, default=1),
-        Column('note', String(140), nullable=True),
+        Column('note', String(140)),
         Column('created_at', DateTime(), nullable=False, default=datetime.utcnow),
     )
 
