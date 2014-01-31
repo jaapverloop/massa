@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import logging
-
-
 class Production(object):
     DEBUG = False
     TESTING = False
@@ -13,4 +10,4 @@ class Production(object):
 
 class Development(Production):
     DEBUG = True
-    LOGGER_LEVEL = logging.DEBUG
+    LOGGER_LEVEL = 10
