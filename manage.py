@@ -33,5 +33,15 @@ def db_drop_tables():
     db.drop_tables()
 
 
+@manager.command
+def db_reset_tables():
+  """Drop and (re)create all the db tables."""
+  if prompt_bool('Are you sure you want to reset all the db tables?'):
+    current_app.preprocess_request()
+    db = g.sl('db')
+    db.drop_tables()
+    db.create_tables()
+
+
 if __name__ == '__main__':
     manager.run()
