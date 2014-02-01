@@ -17,18 +17,20 @@ manager.add_command('runserver', Server(
 
 
 @manager.command
-def dbmake():
-  """Make all the db tables."""
+def db_create_tables():
+  """Create all the db tables."""
   current_app.preprocess_request()
-  g.sl('db').make_tables()
+  db = g.sl('db')
+  db.create_tables()
 
 
 @manager.command
-def dbdrop():
+def db_drop_tables():
   """Drop all the db tables."""
   if prompt_bool('Are you sure you want to drop all the db tables?'):
     current_app.preprocess_request()
-    g.sl('db').drop_tables()
+    db = g.sl('db')
+    db.drop_tables()
 
 
 if __name__ == '__main__':

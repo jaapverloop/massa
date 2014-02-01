@@ -63,7 +63,7 @@ class Db(object):
         self._meta = MetaData(engine)
         define_tables(self._meta)
 
-    def make_tables(self):
+    def create_tables(self):
         self._meta.create_all()
 
     def drop_tables(self):
