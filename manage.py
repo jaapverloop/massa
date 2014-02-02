@@ -12,7 +12,7 @@ manager.add_command('runserver', Server(
     use_debugger = True,
     use_reloader = True,
     host = '0.0.0.0',
-    port = 8080,
+    port = 5000,
 ))
 
 
