@@ -75,7 +75,11 @@ class Db(object):
 
 
 class InputExertion(Model):
-    weight = DecimalType(required=True, validators=[is_weight])
+    weight = DecimalType(
+        required=True,
+        min_value=1,
+        max_value=500,
+        validators=[is_weight])
     exercise = StringType(required=True, choices=[
         'SQUAT',
         'BENCHPRESS',
