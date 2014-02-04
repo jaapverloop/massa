@@ -4,7 +4,8 @@ import logging
 from logging.handlers import RotatingFileHandler
 from knot import Container
 from sqlalchemy import create_engine
-from .domain import Db, ExertionService
+from .persistence import Db
+from .domain.exertion import ExertionService
 
 
 def build(app):

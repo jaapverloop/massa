@@ -1,77 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
 from schematics.models import Model
 from schematics.types import StringType, DecimalType, IntType
-from schematics.exceptions import ConversionError, ValidationError
-from sqlalchemy import (
-    Column,
-    DateTime,
-    Integer,
-    MetaData,
-    Numeric,
-    String,
-    Table,
-)
-
-
-def define_tables(metadata):
-    Table('exertion', metadata,
-        Column('id', Integer, primary_key=True),
-        Column('weight', Numeric(4, 1), nullable=False),
-        Column('exercise', String(25), nullable=False),
-        Column('sets', Integer(3), nullable=False, default=1),
-        Column('reps', Integer(3), nullable=False, default=1),
-        Column('note', String(140)),
-        Column('created_at', DateTime(), nullable=False, default=datetime.utcnow),
-    )
-
-
-def validate(schema, data):
-    try:
-        schema.import_data(data)
-        schema.validate()
-    except (ConversionError, ValidationError) as e:
-        raise InvalidInputError(details=e.messages)
-
-
-def is_weight(value):
-    if abs(value.as_tuple().exponent) > 1:
-        raise ValidationError('More than one decimal exponent not allowed')
-
-    return value
-
-
-class DomainError(Exception):
-    def __init__(self, message=None, details=None):
-        if message: self.message = message
-        if details: self.details = details
-
-
-class EntityNotFoundError(DomainError):
-    """Raised when an entity does not exist."""
-    message = 'Entity does not exist.'
-
-
-class InvalidInputError(DomainError):
-    """Raised when input data is invalid."""
-    message = 'Input data is invalid.'
-
-
-class Db(object):
-    def __init__(self, engine):
-        self._meta = MetaData(engine)
-        define_tables(self._meta)
-
-    def create_tables(self):
-        self._meta.create_all()
-
-    def drop_tables(self):
-        self._meta.drop_all()
-
-    @property
-    def exertion(self):
-        return self._meta.tables['exertion']
+from . import EntityNotFoundError, validate, is_weight
 
 
 class InputExertion(Model):
