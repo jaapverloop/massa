@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from schematics.models import Model
-from schematics.types import StringType, DateType, DecimalType, IntType
+from schematics.types import StringType, DecimalType, IntType
 from schematics.exceptions import ConversionError, ValidationError
 from sqlalchemy import (
     Column,
