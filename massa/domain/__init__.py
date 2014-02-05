@@ -11,7 +11,7 @@ def validate(schema, data):
         raise InvalidInputError(details=e.messages)
 
 
-def is_weight(value):
+def weight_validator(value):
     if abs(value.as_tuple().exponent) > 1:
         raise ValidationError('More than one decimal exponent not allowed')
 

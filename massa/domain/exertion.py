@@ -2,7 +2,7 @@
 
 from schematics.models import Model
 from schematics.types import StringType, DecimalType, IntType
-from . import EntityNotFoundError, validate, is_weight
+from . import EntityNotFoundError, validate, weight_validator
 
 
 class InputExertion(Model):
@@ -10,7 +10,7 @@ class InputExertion(Model):
         required=True,
         min_value=1,
         max_value=500,
-        validators=[is_weight])
+        validators=[weight_validator])
     exercise = StringType(required=True, choices=[
         'SQUAT',
         'BENCHPRESS',
