@@ -2,7 +2,7 @@
 
 from flask import Blueprint, jsonify, g, request, url_for
 from flask.views import MethodView
-from .domain import EntityNotFoundError, InvalidInputError
+from .domain.errors import EntityNotFoundError, InvalidInputError
 
 
 def endpoint(f):
