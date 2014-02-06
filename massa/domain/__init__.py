@@ -13,7 +13,7 @@ def validate(schema, data):
 
 def weight_validator(value):
     if abs(value.as_tuple().exponent) > 1:
-        raise ValidationError('More than one decimal exponent not allowed')
+        raise ValidationError('Only one decimal point is allowed.')
 
     return value
 
