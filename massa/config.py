@@ -11,3 +11,7 @@ class Production(object):
 class Development(Production):
     DEBUG = True
     LOGGER_LEVEL = 10
+
+
+class Testing(Production):
+    TESTING = True
