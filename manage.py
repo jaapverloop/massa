@@ -34,9 +34,9 @@ def db_drop_tables():
 
 
 @manager.command
-def db_reset_tables():
-  """Drop and (re)create all the db tables."""
-  if prompt_bool('Are you sure you want to reset all the db tables?'):
+def db_recreate_tables():
+  """Drop and create all the db tables."""
+  if prompt_bool('Are you sure you want to recreate all the db tables?'):
     current_app.preprocess_request()
     db = g.sl('db')
     db.drop_tables()
