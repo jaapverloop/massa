@@ -1,13 +1,25 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+from flask import g
 from massa import create_app
 
 
 class MassaTestCase(unittest.TestCase):
     def setUp(self):
-        app = create_app('massa.config.Testing')
-        self.test_client = app.test_client()
+        self.app = create_app('massa.config.Testing')
+        self.test_client = self.app.test_client()
+
+        with self.app.test_request_context():
+            self.app.preprocess_request()
+            db = g.sl('db')
+            db.create_tables()
+
+    def tearDown(self):
+        with self.app.test_request_context():
+            self.app.preprocess_request()
+            db = g.sl('db')
+            db.drop_tables()
 
     def assert_status_code(self, response, expected):
         return self.assertEquals(expected, response.status_code)
