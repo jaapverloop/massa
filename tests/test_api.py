@@ -8,4 +8,3 @@ class ApiTestCase(MassaTestCase):
         response = self.test_client.get('/api/exertions/')
         self.assert_status_code(response, 200)
         self.assert_is_json(response)
-        return response
