@@ -2,8 +2,8 @@
 
 from schematics.models import Model
 from schematics.types import StringType, DecimalType, IntType
-from .errors import EntityNotFoundError
-from .validation import validate, weight_validator
+from ..errors import EntityNotFoundError
+from ..validation import validate, weight_validator
 
 
 class InputExertion(Model):
