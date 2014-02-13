@@ -4,6 +4,18 @@ from flask import g, url_for
 from ..views import ApiView, payload
 
 
+def register(bp):
+    bp.add_url_rule(
+        '/exertions/',
+        view_func=ExertionList.as_view('exertion_list'),
+    )
+
+    bp.add_url_rule(
+        '/exertions/<id>',
+        view_func=ExertionItem.as_view('exertion_item'),
+    )
+
+
 class ExertionList(ApiView):
     def get(self):
         service = g.sl('exertion_service')
