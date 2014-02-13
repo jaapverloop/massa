@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import g, url_for
-from ..views import ApiView, payload
+from ..views import JSONEndpoint, payload
 
 
 def register(bp):
@@ -16,7 +16,7 @@ def register(bp):
     )
 
 
-class ExertionList(ApiView):
+class ExertionList(JSONEndpoint):
     def get(self):
         service = g.sl('exertion_service')
         return {'items': service.find_all()}
@@ -28,7 +28,7 @@ class ExertionList(ApiView):
         return service.get(id), 201, {'Location': location}
 
 
-class ExertionItem(ApiView):
+class ExertionItem(JSONEndpoint):
     def get(self, id):
         service = g.sl('exertion_service')
         return service.get(id)

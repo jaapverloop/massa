@@ -4,7 +4,7 @@ from flask import jsonify, request
 from flask.views import MethodView
 
 
-def endpoint(f):
+def jsonify_return_value(f):
     def wrapper(*args, **kwargs):
         rv = f(*args, **kwargs)
 
@@ -36,5 +36,5 @@ def invalid_input_handler(e):
     return jsonify({'message': e.message, 'details': e.details}), 400
 
 
-class ApiView(MethodView):
-    decorators = [endpoint]
+class JSONEndpoint(MethodView):
+    decorators = [jsonify_return_value]
