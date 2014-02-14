@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, render_template, g
+from flask import Flask, g
 from .container import build
 from .web import bp as web
 from .api import bp as api
