@@ -1,5 +1,21 @@
 # -*- coding: utf-8 -*-
 
+from flask import jsonify
+
+
+def register_error_handlers(app):
+    app.register_error_handler(EntityNotFoundError, entity_not_found_handler)
+    app.register_error_handler(InvalidInputError, invalid_input_handler)
+
+
+def entity_not_found_handler(e):
+    return jsonify({'message': e.message}), 404
+
+
+def invalid_input_handler(e):
+    return jsonify({'message': e.message, 'details': e.details}), 400
+
+
 class DomainError(Exception):
     def __init__(self, message=None, details=None):
         if message: self.message = message

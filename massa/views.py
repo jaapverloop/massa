@@ -28,13 +28,5 @@ def payload():
     return request.get_json() or request.form.to_dict()
 
 
-def entity_not_found_handler(e):
-    return jsonify({'message': e.message}), 404
-
-
-def invalid_input_handler(e):
-    return jsonify({'message': e.message, 'details': e.details}), 400
-
-
 class JSONEndpoint(MethodView):
     decorators = [jsonify_return_value]
