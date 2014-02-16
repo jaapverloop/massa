@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from schematics.exceptions import ConversionError, ValidationError
+from .errors import InvalidInputError
 
 
 def validate(schema, data):
