@@ -9,17 +9,23 @@ def register_error_handlers(app):
 
 
 def entity_not_found_handler(e):
-    return jsonify({'message': e.message}), 404
+    return jsonify(e.as_dict()), 404
 
 
 def invalid_input_handler(e):
-    return jsonify({'message': e.message, 'details': e.details}), 400
+    return jsonify(e.as_dict()), 400
 
 
 class DomainError(Exception):
     def __init__(self, message=None, details=None):
         if message: self.message = message
         if details: self.details = details
+
+    def as_dict(self):
+        data = {}
+        if self.message: data['message'] = self.message
+        if self.details: data['details'] = self.details
+        return data
 
 
 class EntityNotFoundError(DomainError):
