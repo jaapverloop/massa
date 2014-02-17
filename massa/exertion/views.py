@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import g, url_for
-from ..views import JSONEndpoint, payload
+from ..utils import JSONEndpoint, payload
 
 
 def register(bp):
