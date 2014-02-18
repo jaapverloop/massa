@@ -16,7 +16,7 @@ def invalid_input_handler(e):
     return jsonify(e.as_dict()), 400
 
 
-class DomainError(Exception):
+class InteractionError(Exception):
     def __init__(self, message=None, details=None):
         if message: self.message = message
         if details: self.details = details
@@ -28,11 +28,11 @@ class DomainError(Exception):
         return data
 
 
-class EntityNotFoundError(DomainError):
+class EntityNotFoundError(InteractionError):
     """Raised when an entity does not exist."""
     message = 'Entity does not exist.'
 
 
-class InvalidInputError(DomainError):
+class InvalidInputError(InteractionError):
     """Raised when input data is invalid."""
     message = 'Input data is invalid.'
