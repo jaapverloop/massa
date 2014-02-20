@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import jsonify, request
+from flask import jsonify, request, url_for
 from flask.views import MethodView
 
 
@@ -26,6 +26,10 @@ def jsonify_return_value(f):
 
 def payload():
     return request.get_json() or request.form.to_dict()
+
+
+def full_url_for(endpoint, **kwargs):
+    return url_for(endpoint, _external=True, **kwargs)
 
 
 class JSONEndpoint(MethodView):

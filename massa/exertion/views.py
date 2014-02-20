@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from flask import g, url_for
-from ..http import JSONEndpoint, payload
+from flask import g
+from ..http import JSONEndpoint, payload, full_url_for
 
 
 def register(bp):
@@ -24,7 +24,7 @@ class ExertionList(JSONEndpoint):
     def post(self):
         service = g.sl('exertion_service')
         id = service.create(**payload())
-        location = url_for('api.exertion_item', id=id, _external=True)
+        location = full_url_for('api.exertion_item', id=id)
         return service.get(id), 201, {'Location': location}
 
 
