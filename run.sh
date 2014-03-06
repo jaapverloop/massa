@@ -3,13 +3,9 @@
 MASSA_ROOT="$(cd "$(dirname "${0}")"; echo $(pwd))"
 ENV_FILE="${MASSA_ROOT}/.env"
 
-if [ ! -f "${ENV_FILE}" ]; then
-    echo "The root directory does not contain the required `.env` file."
-    echo "Copy the example file and make the necessary changes."
-    exit 1
+if [ -f "${ENV_FILE}" ]; then
+    source "${ENV_FILE}"
 fi
-
-source "${ENV_FILE}"
 
 exec "${MASSA_ROOT}/.virtualenv/bin/gunicorn" \
     --name massa \
