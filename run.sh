@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set -o errexit
+set -o nounset
+
 MASSA_ROOT="$(cd "$(dirname "${0}")"; echo $(pwd))"
 ENV_FILE="${MASSA_ROOT}/.env"
 
