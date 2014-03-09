@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 
-class Production(object):
-    DEBUG = False
-    TESTING = False
-    SECRET_KEY = '##CHANGEME##'
-    SQLALCHEMY_DATABASE_URI = 'postgresql://massa:secret@localhost/massa'
-    SQLALCHEMY_ECHO = False
+import os
 
 
-class Development(Production):
-    DEBUG = True
-    LOGGER_LEVEL = 10
+defaults = {
+    'DEBUG': False,
+    'TESTING': False,
+    'SECRET_KEY': '##CHANGEME##',
+    'SQLALCHEMY_DATABASE_URI': 'postgresql://massa:secret@localhost/massa',
+    'SQLALCHEMY_ECHO': False,
+}
 
 
-class Testing(Production):
-    TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite://'
+class FromEnvConfig(object):
+    def __init__(self):
+        for key, value in defaults.iteritems():
+            setattr(self, key, os.getenv(key, value))
