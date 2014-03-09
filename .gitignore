@@ -1,5 +1,8 @@
 .vagrant
 .virtualenv
 .env
+.env.production
+.env.development
+.env.testing
 *.pyc
 massa.log
