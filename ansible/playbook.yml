@@ -2,7 +2,7 @@
 - hosts: vagrant
   vars:
     - root: /srv/massa
-    - pg_password: secret
+    - pg_password: "{{ lookup('env','PG_PASSWORD') }}"
   tasks:
     - name: update apt cache
       apt: update-cache=yes cache_valid_time=3600
