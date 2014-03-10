@@ -34,5 +34,6 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "ansible/playbook.yml"
     ansible.host_key_checking = false
     ansible.verbose = false
+    ansible.limit = "vagrant"
   end
 end
