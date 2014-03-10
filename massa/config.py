@@ -9,6 +9,11 @@ allowed_settings = [
     'SECRET_KEY',
     'SQLALCHEMY_DATABASE_URI',
     'SQLALCHEMY_ECHO',
+    'LOGGER_LEVEL',
+    'LOGGER_FORMAT',
+    'LOGGER_FILENAME',
+    'LOGGER_MAX_BYTES',
+    'LOGGER_BACKUP_COUNT',
 ]
 
 
