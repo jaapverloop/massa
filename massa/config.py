@@ -3,16 +3,18 @@
 import os
 
 
-defaults = {
-    'DEBUG': False,
-    'TESTING': False,
-    'SECRET_KEY': '##CHANGEME##',
-    'SQLALCHEMY_DATABASE_URI': 'postgresql://massa:secret@localhost/massa',
-    'SQLALCHEMY_ECHO': False,
-}
+allowed_settings = [
+    'DEBUG',
+    'TESTING',
+    'SECRET_KEY',
+    'SQLALCHEMY_DATABASE_URI',
+    'SQLALCHEMY_ECHO',
+]
 
 
 class FromEnvConfig(object):
     def __init__(self):
-        for key, value in defaults.iteritems():
-            setattr(self, key, os.getenv(key, value))
+        for key in allowed_settings:
+            value = os.getenv(key)
+            if value is not None:
+                setattr(self, key, value)
