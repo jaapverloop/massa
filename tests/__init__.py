@@ -5,10 +5,6 @@ from flask import g
 from massa import create_app
 
 
-def create_testable_app():
-    return create_app('massa.config.Testing')
-
-
 def create_db_tables(app):
     with app.test_request_context():
         app.preprocess_request()
@@ -35,7 +31,7 @@ def db_context(f):
 
 class MassaTestCase(unittest.TestCase):
     def setUp(self):
-        self.app = create_testable_app()
+        self.app = create_app()
         self.test_client = self.app.test_client()
 
     def assert_status_code(self, response, expected):
