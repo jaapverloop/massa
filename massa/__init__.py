@@ -10,8 +10,7 @@ from .middleware import HTTPMethodOverrideMiddleware
 
 def create_app(config=None):
     app = Flask('massa')
-    app.config.from_object(config or 'massa.config.FromEnvConfig')
-    app.config.from_envvar('MASSA_CONFIG', silent=True)
+    app.config.from_object(config or 'massa.config.environment')
 
     sl = build(app)
 
