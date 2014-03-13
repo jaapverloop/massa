@@ -25,16 +25,13 @@ def build(app):
     @c.factory(cache=True)
     def logger(c):
         handler = RotatingFileHandler(
-            c('LOGGER_FILENAME', '{}.log'.format(app.name)),
-            maxBytes=c('LOGGER_MAX_BYTES', 1024*1024),
-            backupCount=c('LOGGER_BACKUP_COUNT', 3)
+            c['LOGGER_FILENAME'],
+            maxBytes=c['LOGGER_MAX_BYTES'],
+            backupCount=c['LOGGER_BACKUP_COUNT']
         )
 
-        handler.setFormatter(logging.Formatter(
-            c('LOGGER_FORMAT', "%(asctime)s %(levelname)s: %(message)s")
-        ))
-
-        app.logger.setLevel(c('LOGGER_LEVEL', logging.INFO))
+        handler.setFormatter(logging.Formatter(c['LOGGER_FORMAT']))
+        app.logger.setLevel(c['LOGGER_LEVEL'])
         app.logger.addHandler(handler)
 
         return app.logger
