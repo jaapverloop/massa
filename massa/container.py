@@ -2,7 +2,7 @@
 
 import logging
 from logging.handlers import RotatingFileHandler
-from knot import Container
+from knot import Container, service
 from sqlalchemy import create_engine
 from .storage import Db
 from .exertion.model import ExertionService
@@ -11,18 +11,18 @@ from .exertion.model import ExertionService
 def build(app):
     c = Container(app.config)
 
-    @c.factory(cache=True)
+    @service(c)
     def db(c):
         return Db(create_engine(
             c['SQLALCHEMY_DATABASE_URI'],
             echo=c['SQLALCHEMY_ECHO']
         ))
 
-    @c.factory(cache=True)
+    @service(c)
     def exertion_service(c):
         return ExertionService(c('db').exertion)
 
-    @c.factory(cache=True)
+    @service(c)
     def logger(c):
         handler = RotatingFileHandler(
             c['LOGGER_FILENAME'],
