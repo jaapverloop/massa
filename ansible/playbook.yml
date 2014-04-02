@@ -31,8 +31,8 @@
       action: user name=massa system=yes state=present
       sudo: yes
 
-    - name: mount sourcecode
-      action: mount fstype=vboxsf opts=uid=massa,gid=massa name={{ root }} src=/vagrant state=mounted
+    - name: create symlink to sourcecode
+      action: file src=/vagrant dest={{ root }} state=link
       sudo: yes
 
     - name: install dependencies
