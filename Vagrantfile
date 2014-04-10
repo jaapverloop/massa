@@ -1,5 +1,6 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "hashicorp/precise64"
+  config.vm.hostname = "massa-vagrant"
   config.vm.network :private_network, ip: "33.33.33.10"
 
   config.vm.synced_folder ".", "/vagrant",
