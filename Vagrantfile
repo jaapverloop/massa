@@ -3,10 +3,6 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "massa-vagrant"
   config.vm.network :private_network, ip: "33.33.33.10"
 
-  config.vm.synced_folder ".", "/vagrant",
-    type: "rsync",
-    rsync__exclude: [".git/", ".virtualenv"]
-
   config.ssh.forward_agent = true
 
   config.vm.provider "virtualbox" do |v|
