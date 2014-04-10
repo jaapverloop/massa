@@ -1,5 +1,5 @@
-upstream app_server_massa {
-    server unix:/tmp/gunicorn.massa.sock fail_timeout=0;
+upstream {{ app.name }}_appserver {
+    server unix:/tmp/gunicorn.{{ app.name }}.sock fail_timeout=0;
 }
 
 server {
@@ -9,13 +9,13 @@ server {
     keepalive_timeout 5;
     client_max_body_size 2m;
 
-    access_log  /var/log/nginx/massa.access.log;
-    error_log  /var/log/nginx/massa.error.log;
+    access_log /var/log/nginx/{{ app.name }}.access.log;
+    error_log /var/log/nginx/{{ app.name }}.error.log;
 
     location / {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Host $http_host;
         proxy_redirect off;
-        proxy_pass http://app_server_massa;
+        proxy_pass http://{{ app.name }}_appserver;
     }
 }

@@ -1,0 +1,8 @@
+---
+app:
+  name: massa
+  user: vagrant
+postgres:
+  database: massa
+  user: massa
+  password: secret

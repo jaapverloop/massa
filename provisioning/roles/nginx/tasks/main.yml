@@ -1,0 +1,14 @@
+---
+- name: install nginx
+  apt: pkg=nginx state=installed
+
+- name: start nginx
+  service: name=nginx state=started enabled=yes
+
+- name: remove /etc/nginx/sites-enabled/default
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  notify: restart nginx
+
+- name: create /etc/nginx/sites-enabled/massa.conf
+  template: src=massa.conf.j2 dest=/etc/nginx/sites-enabled/massa.conf owner=root group=root mode=0644
+  notify: restart nginx

@@ -1,0 +1,7 @@
+- name: configure dbservers
+  hosts: dbservers
+  sudo: yes
+  gather_facts: false
+  roles:
+    - common
+    - postgres

@@ -1,0 +1,39 @@
+---
+- name: install python-dev
+  apt: pkg=python-dev state=installed
+
+- name: create user
+  user: name={{ app.user }} system=yes state=present
+
+- name: check if pip is installed
+  shell: "which pip && echo 'yes' || echo 'no'"
+  register: pip_is_installed
+  changed_when: pip_is_installed.stdout == 'no'
+
+- name: download get-pip.py
+  get_url: url=https://raw.github.com/pypa/pip/master/contrib/get-pip.py dest=/tmp/get-pip.py
+  when: pip_is_installed.stdout == 'no'
+
+- name: install pip
+  command: python /tmp/get-pip.py
+  when: pip_is_installed.stdout == 'no'
+
+- name: delete get-pip.py
+  file: path=/tmp/get-pip.py state=absent
+  when: pip_is_installed.stdout == 'no'
+
+- name: check if virtualenv is installed
+  shell: "which virtualenv && echo 'yes' || echo 'no'"
+  register: virtualenv_is_installed
+  changed_when: virtualenv_is_installed.stdout == 'no'
+
+- name: install virtualenv
+  shell: "pip install virtualenv"
+  when: virtualenv_is_installed.stdout == 'no'
+
+- name: create root folder as a symlink to vagrant folder
+  file: src=/vagrant dest=/srv/{{ app.name }} state=link owner={{ app.user }} group={{ app.user }}
+
+- name: install python packages
+  pip: requirements=/srv/{{ app.name }}/requirements.txt virtualenv=/srv/{{ app.name }}/.virtualenv state=present
+  sudo_user: "{{ app.user }}"

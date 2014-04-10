@@ -13,10 +13,10 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision :ansible do |ansible|
-    ansible.inventory_path = "ansible/inventory"
-    ansible.playbook = "ansible/playbook.yml"
+    ansible.inventory_path = "provisioning/development.ini"
+    ansible.playbook = "provisioning/site.yml"
     ansible.host_key_checking = false
     ansible.verbose = false
-    ansible.limit = "vagrant"
+    ansible.limit = "development"
   end
 end

@@ -1,0 +1,8 @@
+- name: configure webservers
+  hosts: webservers
+  sudo: yes
+  gather_facts: false
+  roles:
+    - common
+    - nginx
+    - app
