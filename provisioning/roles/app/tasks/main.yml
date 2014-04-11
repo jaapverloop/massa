@@ -37,3 +37,6 @@
 - name: install python packages
   pip: requirements=/srv/{{ app.name }}/requirements.txt virtualenv=/srv/{{ app.name }}/.virtualenv state=present
   sudo_user: "{{ app.user }}"
+
+- name: create config file for development
+  template: src=development.j2 dest=/srv/{{ app.name }}/.env.development owner={{ app.user }} group={{ app.user }}
