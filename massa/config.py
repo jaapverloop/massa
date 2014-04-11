@@ -3,6 +3,7 @@
 import logging
 from getenv import env
 
+
 DEBUG = env('DEBUG', False)
 TESTING = env('TESTING', False)
 SECRET_KEY = env('SECRET_KEY', 'ValarMorghulis')
