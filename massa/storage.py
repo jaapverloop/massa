@@ -29,12 +29,6 @@ class Db(object):
         self._meta = MetaData(engine)
         define_tables(self._meta)
 
-    def create_tables(self):
-        self._meta.create_all()
-
-    def drop_tables(self):
-        self._meta.drop_all()
-
     @property
     def exertion(self):
         return self._meta.tables['exertion']

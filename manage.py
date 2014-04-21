@@ -17,32 +17,5 @@ manager.add_command('runserver', Server(
 ))
 
 
-@manager.command
-def db_create_tables():
-    """Create all the db tables."""
-    current_app.preprocess_request()
-    db = g.sl('db')
-    db.create_tables()
-
-
-@manager.command
-def db_drop_tables():
-    """Drop all the db tables."""
-    if prompt_bool('Are you sure you want to drop all the db tables?'):
-        current_app.preprocess_request()
-        db = g.sl('db')
-        db.drop_tables()
-
-
-@manager.command
-def db_recreate_tables():
-    """Drop and create all the db tables."""
-    if prompt_bool('Are you sure you want to recreate all the db tables?'):
-        current_app.preprocess_request()
-        db = g.sl('db')
-        db.drop_tables()
-        db.create_tables()
-
-
 if __name__ == '__main__':
     manager.run()
