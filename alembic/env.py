@@ -13,9 +13,8 @@ sys.path.append(os.getcwd())
 # access to the values within the .ini file in use.
 config = context.config
 
-# get sqlalchemy.url from environment
-from getenv import env
-url = env('SQLALCHEMY_DATABASE_URI')
+# get sqlalchemy.url from massa.config
+from massa.config import SQLALCHEMY_DATABASE_URI as url
 config.set_main_option('sqlalchemy.url', url)
 
 # Interpret the config file for Python logging.
