@@ -5,7 +5,7 @@ from .container import build
 from .errors import register_error_handlers
 from .web import bp as web
 from .api import bp as api
-from .middleware import HTTPMethodOverrideMiddleware
+from .http import HTTPMethodOverrideMiddleware
 
 
 def create_app(config=None):
